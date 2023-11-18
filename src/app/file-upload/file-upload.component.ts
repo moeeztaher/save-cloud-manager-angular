@@ -2,6 +2,7 @@
 
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-file-upload',
@@ -10,8 +11,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FileUploadComponent {
   selectedFile: File | null = null;
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiBaseUrl;
+  }
 
   onFileSelected(event: any): void {
     const fileList: FileList = event.target.files;
@@ -27,7 +31,9 @@ export class FileUploadComponent {
       formData.append('fileName', this.selectedFile.name);
 
       // Replace the URL with your actual backend API endpoint
-      const uploadUrl = 'http://localhost:8081/file/upload';
+      const endpoint = '/file/upload'; // Replace with your actual API endpoint
+      const uploadUrl = `${this.apiUrl}${endpoint}`;
+      // const uploadUrl = 'http://localhost:8081/file/upload';
 
       this.http.post(uploadUrl, formData).subscribe(
         response => {
