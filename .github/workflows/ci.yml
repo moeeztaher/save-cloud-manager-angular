@@ -18,6 +18,6 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build -t cloudsavemanager .
+      run: docker build -t moeztahir96/cloudsavemanager .
     - name: Push to docker hub
       run: docker push moeztahir96/cloudsavemanager:latest  
