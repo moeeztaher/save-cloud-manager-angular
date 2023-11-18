@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <h1>
-      Welcome to Your Angular App!
+      Cloud Save Manager
     </h1>
     <app-file-upload></app-file-upload>
   `,
