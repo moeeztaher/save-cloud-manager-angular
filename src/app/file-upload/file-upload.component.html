@@ -1,7 +1,11 @@
+<div style="display: flex; justify-content: flex-end; align-items: center; padding-right: 10px;">
+  <input hidden="yes" type="file" id="input-file-id" (change)="onFileSelected($event)"/>
+  <label for="input-file-id" mat-raised-button color="primary" style="color: lightblue;">
+    Choose Files
+    <mat-icon style="margin-left: 5px; color: lightblue;">cloud_upload</mat-icon>
+  </label>
 
-<div>
-  <input hidden="true" type="file" onclick="this.value=null" (change)="onFileSelected($event)"/>
-  <button mat-flat-button color="primary" (click)="onUpload()">Upload</button>
+  <!-- Add progress bar -->
+  <mat-progress-bar *ngIf="uploadProgress !== undefined" mode="determinate" [value]="uploadProgress" style="width: 25%;"></mat-progress-bar>
+
 </div>
-  
-  
