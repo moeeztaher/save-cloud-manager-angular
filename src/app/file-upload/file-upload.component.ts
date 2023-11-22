@@ -36,13 +36,12 @@ export class FileUploadComponent {
       formData.append('file', this.selectedFile);
       formData.append('fileName', this.selectedFile.name);
   
-      const endpoint = '/file/upload'; // Replace with your actual API endpoint
+      const endpoint = '/file/upload'; 
       const uploadUrl = `${this.apiUrl}${endpoint}`;
   
       this.http.post(uploadUrl, formData, { reportProgress: true, observe: 'events' }).subscribe(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.UploadProgress) {
-            // Introduce a condition to check if progress is below a certain threshold
             if (event.loaded < (event.total ?? 1) * 0.1) {
               this.uploadProgress = 0;
             } else {
@@ -50,7 +49,6 @@ export class FileUploadComponent {
             }
           } else if (event.type === HttpEventType.Response) {
             console.log('File uploaded successfully:', event.body);
-            // Reset progress bar after successful upload
             this.snackBar.open('File uploaded successfully', 'Dismiss', {
               duration: 3000,
               verticalPosition: 'top',
@@ -61,7 +59,6 @@ export class FileUploadComponent {
         },
         error => {
           console.error('Error uploading file:', error);
-          // Reset progress bar on error
           this.snackBar.open('File uploaded successfully', 'Dismiss', {
             duration: 3000,
             verticalPosition: 'top',

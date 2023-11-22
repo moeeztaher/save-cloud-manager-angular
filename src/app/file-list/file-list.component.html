@@ -1,25 +1,10 @@
-<!-- 
-<div>
-    <button (click)="getFileStructure()">Fetch File List</button>
-  </div> -->
-  
-  <!-- <div *ngIf="fileStructure">
-    <h2>Files available</h2>
-    <ul>
-      <li *ngFor="let item of fileStructure">
-        {{ item.name }}
-      </li>
-    </ul>
-  </div> -->
- 
-  <app-file-upload></app-file-upload>
+ <app-file-upload></app-file-upload>
   <mat-list>
     <div mat-subheader>Files</div>
     @for (item of fileStructure; track item) {
       <mat-list-item>
         <mat-icon matListItemIcon>folder</mat-icon>
         <div matListItemTitle style="cursor: pointer;" class="hoverable-item" (click)="downloadFile(item.name)">{{item.name}}</div>
-        <!-- <div matListItemLine>{{date}}</div> -->
       </mat-list-item>
     }
     <mat-divider></mat-divider>

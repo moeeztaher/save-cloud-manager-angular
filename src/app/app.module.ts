@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileService } from './services/file.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Ensure you import the FileService as well
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import {MatDividerModule} from '@angular/material/divider';
@@ -34,7 +34,7 @@ import {
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,],
-  providers: [FileService], // Don't forget to add FileService to providers
+  providers: [FileService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

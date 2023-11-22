@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['file-list.component.css'],
 })
 export class FileListComponent implements OnInit {
-  @Input() fileStructure: any[] | undefined; // Add this line
+  @Input() fileStructure: any[] | undefined;
 
   constructor(private fileService: FileService, private snackBar: MatSnackBar) {}
 
