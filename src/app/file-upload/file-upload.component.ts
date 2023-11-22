@@ -1,8 +1,10 @@
 // file-upload.component.ts
 
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+// import { FileListComponent } from '../file-list/file-list.component';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,34 +15,60 @@ export class FileUploadComponent {
   selectedFile: File | null = null;
   private apiUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     this.apiUrl = environment.apiBaseUrl;
   }
 
+  uploadProgress: number | undefined;
+
   onFileSelected(event: any): void {
+    console.log("asdsadsa");
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       this.selectedFile = fileList[0];
+      this.onUpload();
     }
   }
-
+  
   onUpload(): void {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       formData.append('fileName', this.selectedFile.name);
-
-      // Replace the URL with your actual backend API endpoint
+  
       const endpoint = '/file/upload'; // Replace with your actual API endpoint
       const uploadUrl = `${this.apiUrl}${endpoint}`;
-      // const uploadUrl = 'http://localhost:8081/file/upload';
-
-      this.http.post(uploadUrl, formData).subscribe(
-        response => {
-          console.log('File uploaded successfully:', response);
+  
+      this.http.post(uploadUrl, formData, { reportProgress: true, observe: 'events' }).subscribe(
+        (event: HttpEvent<any>) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // Introduce a condition to check if progress is below a certain threshold
+            if (event.loaded < (event.total ?? 1) * 0.1) {
+              this.uploadProgress = 0;
+            } else {
+              this.uploadProgress = Math.round((event.loaded / (event.total ?? 1)) * 100);
+            }
+          } else if (event.type === HttpEventType.Response) {
+            console.log('File uploaded successfully:', event.body);
+            // Reset progress bar after successful upload
+            this.snackBar.open('File uploaded successfully', 'Dismiss', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            });
+            this.uploadProgress = undefined;
+          }
         },
         error => {
           console.error('Error uploading file:', error);
+          // Reset progress bar on error
+          this.snackBar.open('File uploaded successfully', 'Dismiss', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            panelClass: ['custom-snackbar']
+          });
+          this.uploadProgress = undefined;
         }
       );
     } else {

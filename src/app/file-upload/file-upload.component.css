@@ -1,0 +1,7 @@
+.custom-snackbar {
+    background-color: white;
+  }
+  
+  .custom-snackbar button {
+    background-color: blue !important;
+  }

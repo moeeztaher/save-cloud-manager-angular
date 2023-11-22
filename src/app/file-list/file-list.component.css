@@ -1,0 +1,9 @@
+.hoverable-item {
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add a transition effect */
+  }
+  
+  .hoverable-item:hover {
+    background-color: rgba(0, 0, 255, 0.1); /* Slightly transparent blue background on hover */
+    color: blue;
+  }
+  
