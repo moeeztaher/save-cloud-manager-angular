@@ -1,25 +1,9 @@
-
-FROM node:latest as build
-
-
-WORKDIR /usr/local/app
-
-COPY ./ /usr/local/app/
-
-
+FROM node:latest as node
+WORKDIR /app
+COPY . .
 RUN npm install
+RUN npm run build --prod
 
-
-RUN npm run build
-
-
-# Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
-FROM nginx:latest
-
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/file-explorer /usr/share/nginx/html
-
-# Expose port 80
+FROM nginx:alpine
+COPY --from=node /app/dist/file-explorer /usr/share/nginx/html
 EXPOSE 80

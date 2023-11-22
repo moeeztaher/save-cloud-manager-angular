@@ -61,7 +61,7 @@ export class FileListComponent implements OnInit {
       (data: any) => {
         console.log('File downloaded:', data);
         const contentType = data && data.headers ? data.headers.get('Content-Type') || 'application/octet-stream' : 'application/octet-stream';
-        const blob = new Blob([data], { type: contentType });
+        const blob = new Blob([data], { type: "txt" });
         const url = window.URL.createObjectURL(blob);
         window.open(url);
       },
